@@ -1,16 +1,22 @@
 <template>
-  <view class="chessboard">
-    <view v-for="(a, y) in game.arr" :key="y" class="tableLine">
-      <view v-for="(b, x) in a" :key="x" class="tableBox">
-        <view class="block" @click="handleClick(y, x)" :class="render(b)">
+  <view class="u-page">
+
+    <view class="chessboard">
+      <view v-for="(a, y) in game.arr" :key="y" class="tableLine">
+        <view v-for="(b, x) in a" :key="x" class="tableBox">
+          <view class="block" @click="handleClick(y, x)" :class="render(b)">
+          </view>
+          <view class="bz" :style="{
+        backgroundImage: `url(${bz(y, x)})`
+      }"></view>
         </view>
-        <view class="bz" :style="{
-      backgroundImage: `url(${bz(y, x)})`
-    }"></view>
       </view>
     </view>
+    <view>{{ game.turnIndex }}</view>
+
+    <button @click="stop">结束</button>
   </view>
-  <view>{{ game.turnIndex }}</view>
+
 </template>
 
 <script setup>
@@ -75,8 +81,8 @@ const handleClick = (y, x) => {
     title: '此处已有棋子',
     icon: 'none'
   });
-game.putPiece(point, game.turnIndex);
-game.turnNext()
+  game.putPiece(point, game.turnIndex);
+  game.turnNext()
 }
 onMounted(() => {
 })
@@ -180,9 +186,22 @@ const stop = () => {
   background-color: black;
 }
 
+.u-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-image: url('https://img0.baidu.com/it/u=641935396,1248289296&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=889');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
 
 .chessboard {
   width: calc(100vw - 50rpx);
+
   outline: solid 1px;
   @L: 50rpx;
   //@M: 5px;
